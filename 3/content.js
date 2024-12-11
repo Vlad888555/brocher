@@ -6,13 +6,29 @@ let highlightStyle = `
 function enableSelection() {
   document.body.style.cursor = 'crosshair';
 
-  let lastHighlightedElement = null; // Для снятия подсветки с предыдущего элемента
+  let lastHighlightedElement = null;
+
+  //путь к элементу
+  const getCssSelector = (element) => {
+    const parts = [];
+    while (element.parentElement) {
+      const tagName = element.tagName.toLowerCase();
+      const id = element.id ? `#${element.id}` : '';
+      const classes = [...element.classList].map(cls => `.${cls}`).join('');
+      const siblingIndex = Array.from(element.parentElement.children).indexOf(element) + 1;
+
+      parts.unshift(`${tagName}${id}${classes}:nth-child(${siblingIndex})`);
+      element = element.parentElement;
+    }
+    return parts.join(' > ');
+  };
+
 
   const mouseOverHandler = (event) => {
     if (lastHighlightedElement) {
       lastHighlightedElement.style.cssText = lastHighlightedElement.style.cssText.replace(highlightStyle, '');
     }
-    lastHighlightedElement = event.target; // Обновляем последний подсвеченный элемент
+    lastHighlightedElement = event.target;
     event.target.style.cssText += highlightStyle;
   };
 
@@ -21,27 +37,38 @@ function enableSelection() {
     event.stopPropagation();
     document.body.style.cursor = '';
 
-    // Убираем подсветку с выбранного элемента
     if (lastHighlightedElement) {
       lastHighlightedElement.style.cssText = lastHighlightedElement.style.cssText.replace(highlightStyle, '');
     }
 
-    // Очищаем обработчики событий
     document.removeEventListener('mouseover', mouseOverHandler);
     document.removeEventListener('click', clickHandler);
     const currentUrl = window.location.href;
-
-    // Получаем только данные родительского элемента
     const selectedElementInfo = {
+      cssSelector: getCssSelector(event.target),
       url: currentUrl,
-      tag: event.target.tagName, // Тег элемента
-      id: event.target.id || null, // ID элемента, если есть
-      classList: [...event.target.classList], // Список классов элемента
-      textContent: event.target.textContent.trim() // Текст элемента
+      textContent: event.target.textContent.trim(),
     };
 
     console.log('Selected Element Info:', selectedElementInfo);
-    alert(`Selected Element Info:\n${JSON.stringify(selectedElementInfo, null, 2)}`);
+    // alert(`Selected Element Info:\n${JSON.stringify(selectedElementInfo, null, 2)}`);
+
+    //на сервер
+    const apiUrl = "http://localhost/test1/api.php";
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(selectedElementInfo),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   document.addEventListener('mouseover', mouseOverHandler);

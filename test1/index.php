@@ -10,6 +10,14 @@
 </head>
 <body>
     <p>начало</p>
+    <p>начало</p>
+    <p>начало</p>
+    <p>начало</p>
+    <p>начало</p>
+    <p class="p">начало</p>
+    <p class="p">начало</p>
+    <p class="p">начало</p>
+    <p class="p">начало</p>
     <form action="reg.php" method="post">
         <input name="name" type="text">
         <input name="password" type="password">

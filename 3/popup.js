@@ -9,6 +9,7 @@ document.getElementById('getURL').addEventListener('click', async () => {
       target: { tabId: tab.id },
       files: ['content.js'],
     });
+    
   });
   
 document.getElementById('log').addEventListener("click", ()=>{
