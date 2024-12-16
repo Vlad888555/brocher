@@ -50,9 +50,6 @@ function enableSelection() {
       textContent: event.target.textContent.trim(),
     };
 
-    console.log('Selected Element Info:', selectedElementInfo);
-    // alert(`Selected Element Info:\n${JSON.stringify(selectedElementInfo, null, 2)}`);
-
     //на сервер
     const apiUrl = "http://127.0.0.1:8000/data";
 
@@ -64,7 +61,7 @@ function enableSelection() {
       body: JSON.stringify(selectedElementInfo),
     })
       .then(response => {
-        console.log('Raw Response:', response); // Логируем ответ целиком
+        console.log('Raw Response:', response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
