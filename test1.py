@@ -11,7 +11,7 @@ import threading
 # Telegram Bot Token
 TELEGRAM_BOT_TOKEN = "7903384627:AAGLIY65QvFC-sH3akRYgNvmTiPupLyseWQ"
 bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
-
+# Это позор
 # Flask-приложение
 app = Flask(__name__)
 CORS(app)
