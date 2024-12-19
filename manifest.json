@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Element Parser",
+    "version": "1.0",
+    "description": "Выбор элемента для парсинга текущей страницы",
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["<all_urls>"],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "alert.png",
+        "48": "alert.png",
+        "128": "alert.png"
+      }
+    },
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
+  
